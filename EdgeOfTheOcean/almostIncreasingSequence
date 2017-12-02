@@ -1,0 +1,70 @@
+/*
+* Java 8 O(nSq.) solution to almostIncreasingSequence from EdgeOfTheOcean in CodeFights
+* Input: Takes an integer sequence array
+* Output: Returns true if strictly increasing sequence is possible after removing one element
+* Fails 32/34 Execution time limit on CodeFights CodeScore-196/300
+* How ~not to Code (or how to code Inefficiently AF) series. Entry ichi/uno!
+*/
+boolean almostIncreasingSequence(int[] sequence) {
+    
+    // Store "sequence[]" in a dynamic array "seq" to make manipulation easier
+    ArrayList<Integer> seq = new ArrayList<>(Arrays.stream(sequence).boxed().collect(Collectors.toList()));
+    
+    // Increasing sequence indicator
+    boolean incSeqFlag;
+    
+    // Parse sequence[int] for checking increase sequence possibility
+    for (int seq_i = 0; seq_i < sequence.length; seq_i++)
+    {
+        // Set initial check to true for each element removal
+        incSeqFlag = true;
+        
+        // Save the removed element and its index in seq[AL]
+        int rem_el_i = seq_i;
+        int rem_el = seq.remove(seq_i);
+        
+        // Check seq[AL] elements remaining after removal
+        for (int elem : seq)
+        {
+            // Save next elements index inside seq
+            int seq_nextEl_i = seq.indexOf(elem)+1;
+            
+            // If index exceeds or equals seq[AL] size, break out of loop
+            if ( seq_nextEl_i >= seq.size() ){
+                break;
+            }
+            
+            // Get the next element from the next index
+            int nextEl = seq.get(seq_nextEl_i);
+            
+            // If not in increasing sequence set boolean indicator to false and break loop...
+            // ...to start check on next element
+            if (elem >= nextEl){
+                incSeqFlag = false;
+                break;
+            }
+        }
+        // Restore seq[AL] to what it was for next iteration
+        seq.add(rem_el_i,rem_el);
+        
+        // If boolean has not been set to false, increasing sequence is possible...
+        // ... immediately return true and exit
+        if (incSeqFlag)
+        {
+            return true;
+        }
+    }
+    
+    // All elements in sequence[] parsed but strictly increasing sequence not possible, return false and exit
+    return false;
+
+}
+// brute force approach - psuedo algorithm design
+// loop over elements
+    // remove first elem
+    // leftovers give increasing seq?
+        // return true
+    // otherwise repeat loop
+    // 
+// Loop complete without return stmt. running
+    // return false
