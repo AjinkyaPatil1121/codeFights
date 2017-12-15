@@ -1,0 +1,97 @@
+/*
+* Part 2 for almostIncreasingSequence.java with psedocode and design highlighting!
+* 
+* Entry 2 for how ~not to code series. This time algorithm is O(n). Passes all codeFights tests. In short, how to trick 
+* one system to bend to your will (program)!
+*/
+
+boolean almostIncreasingSequence(int[] sequence) {
+    // 1 3 2 1
+    
+    // Create a string for storing results 0 = true or false 1 = 0 or problem index
+    // String[] seq_st = checkIncSeq(seq)
+    
+    String seq_st[] = new String[2];
+    
+    // Check the initial sequence and return true or find the problem index (initial highest element) which breaks 
+    // the increasing sequence
+    seq_st = checkIncSeq(sequence);
+    
+    // Return true if initial sequence is increasing
+    // if (seq_st[0] == true) return true
+    if (seq_st[0] == "true") return true;
+    
+        // else
+        // break the array
+        // int prev, curr, next
+        // while (seq.length--)
+            // arr1 = [elements w/o problem index]
+            // arr2 = [elements with prob. elem but next elem w/o]
+    // checkIncSeq(arr1) return result
+    // checkIncSeq(arr2) return final result.
+    else {
+        int prob_ind = Integer.parseInt(seq_st[1]);
+        
+        int seq1_ind = 0; int seq_ind = 0;
+        int seq1[] = new int[sequence.length-1];
+        
+        while (seq_ind < sequence.length)
+        {
+            if ( seq_ind == prob_ind )
+            {
+                seq1[seq1_ind++] = sequence[++seq_ind];
+                seq_ind++;
+                continue;
+            }
+            seq1[seq1_ind++] = sequence[seq_ind++];
+        }
+        
+        seq_st = checkIncSeq(seq1);
+        if (seq_st[0] == "true") {return true;}
+        
+        // Construct and
+        // Check 2nd Seq. now since all previous did not return true
+        int seq2[] = new int[sequence.length-1];
+        int seq2_ind = 0; seq_ind = 0;        
+
+        while (seq_ind < sequence.length)
+        {
+            if ( seq_ind == prob_ind )
+            {
+                seq2[seq2_ind++] = sequence[seq_ind];
+                seq_ind+=2;
+                continue;
+            }
+            seq2[seq2_ind++] = sequence[seq_ind++];
+        }        
+
+        seq_st = checkIncSeq(seq2);
+        if (seq_st[0] == "true") {return true;}
+    }
+    
+    // increasing sequence not possible return false
+    return false;
+}
+
+    // String seq_status[2] = true, 0 OR false, prob_elem
+        // scan seq for breaking sequence
+            // save its index
+        // return result
+private String[] checkIncSeq(int[] seq)
+{
+    String seq_status[] = new String[2];
+       
+    for (int seq_i = 0; seq_i < seq.length-1; seq_i++)
+    {
+        if (seq[seq_i] >= seq[seq_i+1])
+        {
+            seq_status[0] = "false";
+            seq_status[1] = ""+seq_i+"";
+            return seq_status;
+        }    
+    }
+       
+    seq_status[0] = "true";
+    seq_status[1] = "0";
+    return seq_status;
+}
