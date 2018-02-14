@@ -1,7 +1,7 @@
 String[] addBorder(String[] picture) {
     
-    int pLastIndex = picture.length;
-    int pElemLen = picture[0].length();
+    int pLastIndex = picture.length; // array length
+    int pElemLen = picture[0].length(); // string length method
     
     StringBuilder[] picBorder = new StringBuilder[ pLastIndex + 2 ];
     String[] retStr = new String[ pLastIndex + 2 ];
